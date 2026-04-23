@@ -1,0 +1,150 @@
+{
+  "asset": {
+    "generator": "glTF-Transform v4.3.0",
+    "version": "2.0"
+  },
+  "accessors": [
+    {
+      "type": "SCALAR",
+      "componentType": 5123,
+      "count": 324384,
+      "bufferView": 0,
+      "byteOffset": 0
+    },
+    {
+      "type": "VEC3",
+      "componentType": 5126,
+      "count": 61675,
+      "max": [
+        0.0286220945417881,
+        0.4996492266654968,
+        0.49999094009399414
+      ],
+      "min": [
+        -0.02863185852766037,
+        -0.4996702969074249,
+        -0.5
+      ],
+      "bufferView": 1,
+      "byteOffset": 0
+    },
+    {
+      "type": "VEC3",
+      "componentType": 5126,
+      "count": 61675,
+      "bufferView": 1,
+      "byteOffset": 12
+    },
+    {
+      "type": "VEC2",
+      "componentType": 5126,
+      "count": 61675,
+      "bufferView": 1,
+      "byteOffset": 24
+    }
+  ],
+  "bufferViews": [
+    {
+      "buffer": 0,
+      "byteOffset": 0,
+      "byteLength": 648768,
+      "target": 34963
+    },
+    {
+      "buffer": 0,
+      "byteOffset": 648768,
+      "byteLength": 1973600,
+      "byteStride": 32,
+      "target": 34962
+    }
+  ],
+  "samplers": [
+    {
+      "magFilter": 9729,
+      "minFilter": 9987,
+      "wrapS": 10497,
+      "wrapT": 10497
+    }
+  ],
+  "textures": [
+    {
+      "source": 1,
+      "sampler": 0
+    },
+    {
+      "source": 2,
+      "sampler": 0
+    },
+    {
+      "source": 0,
+      "sampler": 0
+    }
+  ],
+  "images": [
+    {
+      "mimeType": "image/jpeg",
+      "uri": "metallicRoughness_1.jpg"
+    },
+    {
+      "mimeType": "image/jpeg",
+      "uri": "baseColor_1.jpg"
+    },
+    {
+      "mimeType": "image/jpeg",
+      "uri": "normal_1.jpg"
+    }
+  ],
+  "buffers": [
+    {
+      "uri": "mirror-textured.bin",
+      "byteLength": 2622368
+    }
+  ],
+  "materials": [
+    {
+      "name": "tripo_material_2b17d926-7bb3-4138-8f7d-5e6b00a0a0be",
+      "pbrMetallicRoughness": {
+        "baseColorTexture": {
+          "index": 0
+        },
+        "metallicRoughnessTexture": {
+          "index": 2
+        }
+      },
+      "normalTexture": {
+        "index": 1
+      }
+    }
+  ],
+  "meshes": [
+    {
+      "primitives": [
+        {
+          "attributes": {
+            "POSITION": 1,
+            "NORMAL": 2,
+            "TEXCOORD_0": 3
+          },
+          "mode": 4,
+          "material": 0,
+          "indices": 0
+        }
+      ]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "tripo_node_2b17d926-7bb3-4138-8f7d-5e6b00a0a0be",
+      "mesh": 0
+    }
+  ],
+  "scenes": [
+    {
+      "name": "AuxScene",
+      "nodes": [
+        0
+      ]
+    }
+  ],
+  "scene": 0
+}
