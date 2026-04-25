@@ -98,15 +98,28 @@ if (isCoverMode) {
   const enterBtn = document.getElementById('cover-enter');
   if (enterBtn) {
     enterBtn.addEventListener('click', () => {
-      if (typeof wx !== 'undefined' && wx.miniProgram && typeof wx.miniProgram.switchTab === 'function') {
-        wx.miniProgram.switchTab({ url: '/pages/home/index' });
-      } else if (typeof wx !== 'undefined' && wx.miniProgram && typeof wx.miniProgram.navigateTo === 'function') {
-        wx.miniProgram.navigateTo({ url: `/pages/detail/index?mirrorId=${encodeURIComponent(runtime.mirrorId)}` });
-      } else {
-        console.log('[cover] enter clicked (browser mode)');
-      }
+      navigateIntoMiniProgram();
     });
   }
+}
+
+function navigateIntoMiniProgram() {
+  const homeUrl = '/pages/home/index';
+  const detailUrl = `/pages/detail/index?mirrorId=${encodeURIComponent(runtime.mirrorId)}`;
+
+  if (typeof wx !== 'undefined' && wx.miniProgram) {
+    if (typeof wx.miniProgram.switchTab === 'function') {
+      wx.miniProgram.switchTab({ url: homeUrl });
+      return;
+    }
+    if (typeof wx.miniProgram.navigateTo === 'function') {
+      wx.miniProgram.navigateTo({ url: detailUrl });
+      return;
+    }
+  }
+
+  if (statusEl) statusEl.textContent = '当前环境未接入小程序跳转能力';
+  console.log('[cover] miniProgram API unavailable');
 }
 
 document.getElementById('mirror-title').textContent = mirror.name;
