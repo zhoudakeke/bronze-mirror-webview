@@ -94,22 +94,17 @@ if (isCoverMode) {
   const coverUi = document.getElementById('cover-ui');
   if (coverUi) coverUi.hidden = false;
   const coverTitle = document.getElementById('cover-title');
-  if (coverTitle) coverTitle.textContent = mirror.name;
+  if (coverTitle) coverTitle.textContent = '镜中纹';
   const enterBtn = document.getElementById('cover-enter');
   if (enterBtn) {
     enterBtn.addEventListener('click', () => {
-      if (typeof wx !== 'undefined' && wx.miniProgram && typeof wx.miniProgram.navigateTo === 'function') {
+      if (typeof wx !== 'undefined' && wx.miniProgram && typeof wx.miniProgram.switchTab === 'function') {
+        wx.miniProgram.switchTab({ url: '/pages/home/index' });
+      } else if (typeof wx !== 'undefined' && wx.miniProgram && typeof wx.miniProgram.navigateTo === 'function') {
         wx.miniProgram.navigateTo({ url: `/pages/detail/index?mirrorId=${encodeURIComponent(runtime.mirrorId)}` });
       } else {
         console.log('[cover] enter clicked (browser mode)');
       }
-    });
-  }
-  const candleBtn = document.getElementById('cover-candle');
-  if (candleBtn) {
-    candleBtn.addEventListener('click', () => {
-      const lit = candleBtn.classList.toggle('lit');
-      candleTargetIntensity = lit ? 2.6 : 0;
     });
   }
 }
@@ -143,17 +138,12 @@ const rimLight = new THREE.DirectionalLight(0xe5f0ea, 0.7);
 rimLight.position.set(-3, 1.8, 2.5);
 scene.add(rimLight);
 
-// 封面模式：压低基础光，留出"未点燃"昏暗感；额外加一盏"蜡烛灯"
-let candleLight = null;
-let candleTargetIntensity = 0;
+// 封面模式：保持柔和光照即可，不再使用蜡烛灯
 if (isCoverMode) {
   scene.traverse((obj) => {
-    if (obj.isHemisphereLight) obj.intensity = 0.22;
-    if (obj.isDirectionalLight) obj.intensity = 0.12;
+    if (obj.isHemisphereLight) obj.intensity = 0.95;
+    if (obj.isDirectionalLight) obj.intensity = 0.85;
   });
-  candleLight = new THREE.PointLight(0xffb070, 0, 5, 1.6);
-  candleLight.position.set(-0.55, -0.25, 1.25);
-  scene.add(candleLight);
 }
 
 const modelRoot = new THREE.Group();
@@ -305,6 +295,15 @@ function createHotspots() {
 
 function resize() {
   const stage = canvas.parentElement;
+  if (isCoverMode) {
+    const s = Math.floor(Math.min(stage.clientWidth, stage.clientHeight) * 0.78);
+    renderer.setSize(s, s, true);
+    canvas.style.width = `${s}px`;
+    canvas.style.height = `${s}px`;
+    camera.aspect = 1;
+    camera.updateProjectionMatrix();
+    return;
+  }
   const width = stage.clientWidth;
   const height = stage.clientHeight;
   renderer.setSize(width, height, false);
@@ -405,12 +404,6 @@ function animate() {
     entry.pulse.scale.setScalar(pulseScale);
     entry.pulse.material.opacity = 0.18 + (Math.sin(elapsed * 2.4 + index * 0.7) + 1) * 0.1;
   });
-  if (candleLight) {
-    const flicker = candleTargetIntensity > 0
-      ? candleTargetIntensity + Math.sin(elapsed * 9.0) * 0.18 + Math.sin(elapsed * 17.3) * 0.08
-      : 0;
-    candleLight.intensity += (flicker - candleLight.intensity) * 0.08;
-  }
   controls.update();
   renderer.render(scene, camera);
   updateOverlay();
@@ -437,7 +430,139 @@ async function bootstrap() {
   loadModel(mirror.modelUrl);
   resize();
   window.addEventListener('resize', resize);
+  if (isCoverMode) setupScratchReveal();
   animate();
+}
+
+// ============== 涂抹显色（cover 模式专用） ==============
+function setupScratchReveal() {
+  const stage = document.querySelector('.stage');
+  const scratch = document.getElementById('scratch-canvas');
+  const hint = document.getElementById('cover-hint');
+  const enterBtn = document.getElementById('cover-enter');
+  if (!stage || !scratch) return;
+  scratch.hidden = false;
+
+  const ctx = scratch.getContext('2d');
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  let revealed = false;
+  let drawing = false;
+  let bgImage = null;
+  let interactionStarted = false;
+
+  function resizeScratch() {
+    const w = stage.clientWidth;
+    const h = stage.clientHeight;
+    scratch.width = Math.floor(w * dpr);
+    scratch.height = Math.floor(h * dpr);
+    scratch.style.width = `${w}px`;
+    scratch.style.height = `${h}px`;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (bgImage) drawGray(w, h);
+  }
+
+  function drawGray(w, h) {
+    ctx.globalCompositeOperation = 'source-over';
+    ctx.clearRect(0, 0, w, h);
+    // 按 cover 算法绘制背景图
+    const ir = bgImage.width / bgImage.height;
+    const sr = w / h;
+    let dw, dh, dx, dy;
+    if (ir > sr) { dh = h; dw = h * ir; dx = (w - dw) / 2; dy = 0; }
+    else { dw = w; dh = w / ir; dx = 0; dy = (h - dh) / 2; }
+    ctx.filter = 'grayscale(1) contrast(0.92) brightness(0.86)';
+    ctx.drawImage(bgImage, dx, dy, dw, dh);
+    ctx.filter = 'none';
+    // 半透明蒙尘
+    ctx.fillStyle = 'rgba(60, 50, 38, 0.28)';
+    ctx.fillRect(0, 0, w, h);
+  }
+
+  function eraseAt(x, y) {
+    const r = 46;
+    ctx.globalCompositeOperation = 'destination-out';
+    const grad = ctx.createRadialGradient(x, y, 0, x, y, r);
+    grad.addColorStop(0, 'rgba(0,0,0,1)');
+    grad.addColorStop(0.55, 'rgba(0,0,0,0.85)');
+    grad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fill();
+  }
+
+  function getXY(e) {
+    const rect = scratch.getBoundingClientRect();
+    return { x: e.clientX - rect.left, y: e.clientY - rect.top };
+  }
+
+  scratch.addEventListener('pointerdown', (e) => {
+    if (revealed) return;
+    drawing = true;
+    controls.enabled = false;
+    if (!interactionStarted) {
+      interactionStarted = true;
+      if (hint) hint.classList.add('hidden');
+    }
+    const { x, y } = getXY(e);
+    eraseAt(x, y);
+    try { scratch.setPointerCapture(e.pointerId); } catch (_) {}
+  });
+
+  scratch.addEventListener('pointermove', (e) => {
+    if (!drawing || revealed) return;
+    const { x, y } = getXY(e);
+    eraseAt(x, y);
+  });
+
+  function endStroke() {
+    if (!drawing) return;
+    drawing = false;
+    controls.enabled = true;
+    checkProgress();
+  }
+  scratch.addEventListener('pointerup', endStroke);
+  scratch.addEventListener('pointercancel', endStroke);
+  scratch.addEventListener('pointerleave', endStroke);
+
+  function checkProgress() {
+    if (revealed) return;
+    const w = scratch.width, h = scratch.height;
+    if (!w || !h) return;
+    const step = 28;
+    let cleared = 0, total = 0;
+    try {
+      const data = ctx.getImageData(0, 0, w, h).data;
+      for (let y = 0; y < h; y += step) {
+        for (let x = 0; x < w; x += step) {
+          const a = data[(y * w + x) * 4 + 3];
+          total++;
+          if (a < 28) cleared++;
+        }
+      }
+    } catch (_) { return; }
+    const ratio = total ? cleared / total : 0;
+    // 进入按钮在擦到 25% 后渐显
+    if (enterBtn && ratio > 0.25) enterBtn.classList.add('show');
+    if (ratio >= 0.62) {
+      revealed = true;
+      scratch.classList.add('revealed');
+      if (enterBtn) enterBtn.classList.add('show');
+      controls.enabled = true;
+    }
+  }
+
+  bgImage = new Image();
+  bgImage.crossOrigin = 'anonymous';
+  bgImage.onload = () => resizeScratch();
+  bgImage.onerror = () => {
+    // 加载失败：直接给整体灰色蒙版
+    bgImage = { width: 1000, height: 1600 };
+    resizeScratch();
+  };
+  bgImage.src = './assets/home-bg.png';
+
+  window.addEventListener('resize', resizeScratch);
 }
 
 bootstrap();

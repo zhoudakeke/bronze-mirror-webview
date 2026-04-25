@@ -433,170 +433,135 @@
       }
 
       /* ===== 封面模式（入口页） ===== */
+      body.cover-mode { background: #0a0805; overflow: hidden; }
       body.cover-mode .shell { width: 100%; padding: 0; margin: 0; }
       body.cover-mode .hero { grid-template-columns: 1fr; gap: 0; }
       body.cover-mode .side,
       body.cover-mode .mini-graph-dock,
       body.cover-mode .stage-top,
       body.cover-mode .overlay { display: none; }
-      /* 还原原图：去掉奶油色叠加和舞台径向高光 */
       body.cover-mode::after { display: none; }
       body.cover-mode .stage-backdrop { display: none; }
+
+      /* 3D canvas 限制在中心圆环内 */
+      body.cover-mode .stage canvas#scene {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: min(78vw, 78vh);
+        height: min(78vw, 78vh);
+        transform: translate(-50%, -50%);
+        border-radius: 50%;
+        z-index: 2;
+      }
+
+      /* 涂抹显色：灰阶覆盖 canvas */
+      .scratch-canvas {
+        position: absolute;
+        inset: 0;
+        z-index: 6;
+        touch-action: none;
+        cursor: crosshair;
+        transition: opacity 0.9s ease;
+      }
+      .scratch-canvas.revealed {
+        opacity: 0;
+        pointer-events: none;
+      }
 
       .cover-ui {
         position: absolute;
         inset: 0;
-        z-index: 8;
+        z-index: 9;
         pointer-events: none;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: 56px 24px 48px;
       }
       .cover-ui[hidden] { display: none; }
-      .cover-top {
-        width: 100%;
-        text-align: center;
-        pointer-events: auto;
-      }
-      .cover-title {
-        font-size: clamp(28px, 6vw, 44px);
-        font-weight: 800;
-        color: #f6e6c4;
-        letter-spacing: 0.18em;
-        text-shadow: 0 2px 14px rgba(0, 0, 0, 0.55), 0 0 24px rgba(80, 40, 10, 0.5);
-      }
-      .cover-subtitle {
-        margin-top: 8px;
-        font-size: 13px;
-        color: rgba(246, 230, 196, 0.7);
-        letter-spacing: 0.34em;
-      }
-      .cover-bottom {
-        display: contents;
-      }
 
-      /* —— 古风蜡烛 —— */
-      .cover-candle {
+      /* 顶部右侧竖排标题 */
+      .cover-title-vertical {
         position: absolute;
-        left: 28px;
-        bottom: 130px;
-        appearance: none;
-        border: 0;
-        background: transparent;
-        padding: 8px;
-        cursor: pointer;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        transform-origin: bottom center;
-        animation: candle-attract 2.6s ease-in-out infinite;
-        pointer-events: auto;
+        top: 48px;
+        right: 24px;
+        writing-mode: vertical-rl;
+        text-orientation: upright;
+        font-family: "STKaiti", "KaiTi", "STSong", "SimSun", "Source Han Serif SC", serif;
+        font-weight: 600;
+        font-size: clamp(30px, 6.4vw, 44px);
+        letter-spacing: 0.32em;
+        color: #e6c486;
+        text-shadow:
+          0 2px 12px rgba(0, 0, 0, 0.7),
+          0 0 18px rgba(180, 110, 40, 0.45);
+        pointer-events: none;
+        line-height: 1.1;
       }
-      .cover-candle.lit { animation: none; }
-      .candle-flame {
-        width: 18px;
-        height: 28px;
-        border-radius: 50% 50% 45% 45% / 65% 65% 35% 35%;
-        background: radial-gradient(circle at 50% 70%, #fff6c2 0 22%, #ffcc66 38%, #ff8a1f 70%, rgba(255, 122, 24, 0) 100%);
-        opacity: 0;
-        transform: translateY(8px) scale(0.55);
-        transition: opacity 0.35s ease, transform 0.35s ease;
-        filter: blur(0.4px);
-      }
-      .cover-candle.lit .candle-flame {
-        opacity: 1;
-        transform: translateY(0) scale(1);
-        animation: flicker 1.6s ease-in-out infinite;
-        box-shadow:
-          0 0 18px 6px rgba(255, 170, 80, 0.55),
-          0 0 48px 18px rgba(255, 130, 50, 0.32);
-      }
-      .candle-wick {
-        width: 2px;
-        height: 6px;
-        background: #2a1c10;
-        margin-top: -1px;
-        border-radius: 1px;
-      }
-      .candle-stick {
-        width: 22px;
-        height: 78px;
-        margin-top: -1px;
-        background: linear-gradient(180deg, #fbf2da 0%, #efd9a8 60%, #d8b878 100%);
-        border-radius: 5px 5px 2px 2px;
-        position: relative;
-        box-shadow: inset -3px 0 0 rgba(120, 80, 30, 0.2);
-      }
-      .candle-stick::before {
+      .cover-title-vertical::after {
         content: "";
-        position: absolute;
-        left: 5px;
-        top: 8px;
-        width: 4px;
-        height: calc(100% - 14px);
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.55), rgba(255, 255, 255, 0));
-        border-radius: 2px;
+        display: block;
+        width: 1px;
+        height: 38px;
+        margin: 14px auto 0;
+        background: linear-gradient(180deg, #d9b574, rgba(217, 181, 116, 0));
       }
-      .candle-cup {
-        width: 38px;
-        height: 16px;
-        margin-top: -2px;
-        background: linear-gradient(180deg, #8a5a2a 0%, #5a3617 70%, #3a2210 100%);
-        border-radius: 5px 5px 9px 9px;
-        box-shadow: inset 0 2px 0 rgba(255, 220, 170, 0.22), 0 2px 0 rgba(0, 0, 0, 0.25);
-      }
-      .candle-saucer {
-        width: 70px;
-        height: 12px;
-        margin-top: -2px;
-        background: radial-gradient(ellipse at 50% 30%, #7a4a20 0%, #44260f 80%);
-        border-radius: 50%;
-        box-shadow: 0 6px 18px rgba(0, 0, 0, 0.55);
-      }
-      .candle-hint {
-        margin-top: 12px;
-        font-size: 12px;
-        letter-spacing: 0.22em;
-        color: rgba(255, 232, 190, 0.82);
-        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
-        transition: opacity 0.4s ease;
-      }
-      .cover-candle.lit .candle-hint { opacity: 0; }
 
+      /* 涂抹引导提示 */
+      .cover-hint {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        font-family: "STKaiti", "KaiTi", serif;
+        font-size: 13px;
+        letter-spacing: 0.5em;
+        color: rgba(232, 200, 145, 0.78);
+        text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
+        pointer-events: none;
+        animation: hint-breathe 2.4s ease-in-out infinite;
+      }
+      .cover-hint.hidden { opacity: 0; transition: opacity 0.5s ease; }
+
+      @keyframes hint-breathe {
+        0%, 100% { opacity: 0.45; }
+        50% { opacity: 0.95; }
+      }
+
+      /* 底部点击进入按钮：金线方框 */
       .cover-enter {
         position: absolute;
         left: 50%;
-        bottom: 44px;
+        bottom: 56px;
         transform: translateX(-50%);
         appearance: none;
-        border: 1px solid rgba(232, 196, 140, 0.55);
-        background: linear-gradient(180deg, rgba(60, 36, 16, 0.78), rgba(36, 22, 10, 0.85));
-        color: #f6e6c4;
-        font-size: 15px;
-        font-weight: 700;
-        letter-spacing: 0.32em;
-        padding: 13px 30px 13px 36px;
-        border-radius: 999px;
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        border: 1px solid rgba(217, 181, 116, 0.55);
+        background: linear-gradient(180deg, rgba(38, 22, 8, 0.45), rgba(20, 12, 4, 0.65));
+        color: #f0d9a8;
+        font-family: "STSong", "SimSun", serif;
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0.5em;
+        padding: 12px 26px 12px 30px;
+        border-radius: 2px;
         cursor: pointer;
-        backdrop-filter: blur(6px);
-        box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 220, 170, 0.18);
-        transition: box-shadow 0.18s ease;
+        backdrop-filter: blur(8px);
+        -webkit-backdrop-filter: blur(8px);
+        box-shadow:
+          0 8px 22px rgba(0, 0, 0, 0.5),
+          inset 0 0 0 1px rgba(217, 181, 116, 0.18);
         pointer-events: auto;
+        transition: opacity 0.4s ease, transform 0.18s ease;
+        opacity: 0;
       }
-      .cover-enter:active {
-        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.5);
-      }
-
-      @keyframes flicker {
-        0%, 100% { transform: translateY(0) scale(1); opacity: 1; }
-        25% { transform: translateY(-1px) scale(1.06); opacity: 0.94; }
-        50% { transform: translateY(0) scale(0.96) rotate(-1deg); opacity: 1; }
-        75% { transform: translateY(-1px) scale(1.04) rotate(1deg); opacity: 0.92; }
-      }
-      @keyframes candle-attract {
-        0%, 100% { filter: drop-shadow(0 0 0 rgba(255, 200, 120, 0)); transform: translateY(0); }
-        50% { filter: drop-shadow(0 0 14px rgba(255, 190, 110, 0.5)); transform: translateY(-3px); }
+      .cover-enter.show { opacity: 1; }
+      .cover-enter:active { transform: translateX(-50%) translateY(1px); }
+      .cover-enter::before,
+      .cover-enter::after {
+        content: "";
+        width: 14px;
+        height: 1px;
+        background: linear-gradient(90deg, rgba(217, 181, 116, 0), #d9b574, rgba(217, 181, 116, 0));
       }
     </style>
   </head>
@@ -612,22 +577,12 @@
           <canvas id="scene"></canvas>
           <div class="overlay" id="overlay"></div>
 
+          <canvas class="scratch-canvas" id="scratch-canvas" hidden></canvas>
+
           <div class="cover-ui" id="cover-ui" hidden>
-            <div class="cover-top">
-              <div class="cover-title" id="cover-title">海兽葡萄镜</div>
-              <div class="cover-subtitle" id="cover-subtitle">铜 镜 科 普</div>
-            </div>
-            <div class="cover-bottom">
-              <button class="cover-candle" id="cover-candle" aria-label="点燃蜡烛">
-                <div class="candle-flame"></div>
-                <div class="candle-wick"></div>
-                <div class="candle-stick"></div>
-                <div class="candle-cup"></div>
-                <div class="candle-saucer"></div>
-                <div class="candle-hint" id="candle-hint">点 击 点 燃</div>
-              </button>
-              <button class="cover-enter" id="cover-enter">点 击 进 入</button>
-            </div>
+            <div class="cover-title-vertical" id="cover-title">镜中纹</div>
+            <div class="cover-hint" id="cover-hint">轻 触 拂 拭</div>
+            <button class="cover-enter" id="cover-enter">点 击 进 入</button>
           </div>
 
           <div class="mini-graph-dock" id="mini-graph-dock">
