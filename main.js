@@ -68,6 +68,8 @@ function getRuntimeConfig() {
 const runtime = getRuntimeConfig();
 let activeHotspotId = runtime.hotspotId;
 const isHomeMode = runtime.source === 'miniapp-home';
+const isCoverMode = runtime.source === 'miniapp-cover';
+const isMinimalMode = isHomeMode || isCoverMode;
 
 const canvas = document.getElementById('scene');
 const overlay = document.getElementById('overlay');
@@ -83,6 +85,26 @@ if (isHomeMode) {
   document.body.classList.add('home-mode');
   const stageEl = document.querySelector('.stage');
   if (stageEl) stageEl.classList.add('home-only');
+}
+
+if (isCoverMode) {
+  document.body.classList.add('cover-mode');
+  const stageEl = document.querySelector('.stage');
+  if (stageEl) stageEl.classList.add('home-only');
+  const coverUi = document.getElementById('cover-ui');
+  if (coverUi) coverUi.hidden = false;
+  const coverTitle = document.getElementById('cover-title');
+  if (coverTitle) coverTitle.textContent = mirror.name;
+  const enterBtn = document.getElementById('cover-enter');
+  if (enterBtn) {
+    enterBtn.addEventListener('click', () => {
+      if (typeof wx !== 'undefined' && wx.miniProgram && typeof wx.miniProgram.switchTab === 'function') {
+        wx.miniProgram.switchTab({ url: '/pages/home/index' });
+      } else {
+        console.log('[cover] enter clicked (browser mode)');
+      }
+    });
+  }
 }
 
 document.getElementById('mirror-title').textContent = mirror.name;
@@ -313,8 +335,8 @@ function attachModel(gltf, fallback = false) {
   });
 
   modelRoot.add(model);
-  createHotspots();
-  statusEl.textContent = fallback ? '纹理版加载失败，已切换基础版模型，可正常交互' : '纹理版已加载，拖拽旋转并点击热点查看细节';
+  if (!isCoverMode) createHotspots();
+  if (statusEl) statusEl.textContent = fallback ? '纹理版加载失败，已切换基础版模型，可正常交互' : '纹理版已加载，拖拽旋转并点击热点查看细节';
 }
 
 function loadModel(url, fallback = false) {
@@ -369,13 +391,15 @@ function animate() {
 }
 
 async function bootstrap() {
-  await loadGraph();
-  initGraphUI({
-    getGraphData: () => graphData,
-    onNodeFocus: (conceptId) => focusByConceptId(conceptId),
-    onNavigateMirror: (mirrorId) => navigateToMirror(mirrorId)
-  });
-  if (!isHomeMode) {
+  if (!isCoverMode) {
+    await loadGraph();
+    initGraphUI({
+      getGraphData: () => graphData,
+      onNodeFocus: (conceptId) => focusByConceptId(conceptId),
+      onNavigateMirror: (mirrorId) => navigateToMirror(mirrorId)
+    });
+  }
+  if (!isMinimalMode) {
     const expandBtn = document.getElementById('mini-graph-expand');
     if (expandBtn) expandBtn.addEventListener('click', () => {
       const hot = getActiveHotspot();
