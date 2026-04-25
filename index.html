@@ -35,10 +35,23 @@
         min-height: 100vh;
         font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
         color: var(--text);
-        background:
-          linear-gradient(180deg, rgba(243, 234, 219, 0.42), rgba(233, 220, 199, 0.68)),
-          url("./assets/home-bg.png") center / cover no-repeat fixed,
-          radial-gradient(circle at top, #f8f0e3 0, var(--bg) 45%, #e9dcc7 100%);
+        background: #efe6d8;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -2;
+        background: url("./assets/home-bg.png") center / cover no-repeat;
+      }
+
+      body::after {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background: linear-gradient(180deg, rgba(243, 234, 219, 0.36), rgba(233, 220, 199, 0.62));
       }
 
       .shell {
@@ -66,6 +79,15 @@
         position: relative;
         min-height: calc(100vh - 36px);
         overflow: hidden;
+      }
+
+      .stage-backdrop {
+        position: absolute;
+        inset: 0;
+        background:
+          radial-gradient(circle at 50% 38%, rgba(255, 244, 223, 0.26), rgba(255, 244, 223, 0) 44%),
+          linear-gradient(180deg, rgba(255, 250, 242, 0.08), rgba(255, 250, 242, 0.22));
+        pointer-events: none;
       }
 
       .stage canvas {
@@ -375,6 +397,7 @@
             <div class="eyebrow">铜镜 3D 纹理版</div>
             <div class="status" id="status">模型载入中...</div>
           </div>
+          <div class="stage-backdrop"></div>
           <canvas id="scene"></canvas>
           <div class="overlay" id="overlay"></div>
 
