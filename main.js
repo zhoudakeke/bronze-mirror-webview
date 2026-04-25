@@ -105,6 +105,13 @@ if (isCoverMode) {
       }
     });
   }
+  const candleBtn = document.getElementById('cover-candle');
+  if (candleBtn) {
+    candleBtn.addEventListener('click', () => {
+      const lit = candleBtn.classList.toggle('lit');
+      candleTargetIntensity = lit ? 2.6 : 0;
+    });
+  }
 }
 
 document.getElementById('mirror-title').textContent = mirror.name;
@@ -135,6 +142,19 @@ scene.add(mainLight);
 const rimLight = new THREE.DirectionalLight(0xe5f0ea, 0.7);
 rimLight.position.set(-3, 1.8, 2.5);
 scene.add(rimLight);
+
+// 封面模式：压低基础光，留出"未点燃"昏暗感；额外加一盏"蜡烛灯"
+let candleLight = null;
+let candleTargetIntensity = 0;
+if (isCoverMode) {
+  scene.traverse((obj) => {
+    if (obj.isHemisphereLight) obj.intensity = 0.22;
+    if (obj.isDirectionalLight) obj.intensity = 0.12;
+  });
+  candleLight = new THREE.PointLight(0xffb070, 0, 5, 1.6);
+  candleLight.position.set(-0.55, -0.25, 1.25);
+  scene.add(candleLight);
+}
 
 const modelRoot = new THREE.Group();
 modelRoot.rotation.y = -Math.PI / 2;
@@ -384,6 +404,12 @@ function animate() {
     entry.pulse.scale.setScalar(pulseScale);
     entry.pulse.material.opacity = 0.18 + (Math.sin(elapsed * 2.4 + index * 0.7) + 1) * 0.1;
   });
+  if (candleLight) {
+    const flicker = candleTargetIntensity > 0
+      ? candleTargetIntensity + Math.sin(elapsed * 9.0) * 0.18 + Math.sin(elapsed * 17.3) * 0.08
+      : 0;
+    candleLight.intensity += (flicker - candleLight.intensity) * 0.08;
+  }
   controls.update();
   renderer.render(scene, camera);
   updateOverlay();
