@@ -81,6 +81,15 @@
         overflow: hidden;
       }
 
+      .stage.home-only {
+        min-height: 100vh;
+        border-radius: 0;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+        backdrop-filter: none;
+      }
+
       .stage-backdrop {
         position: absolute;
         inset: 0;
@@ -386,6 +395,41 @@
 
         .mini-graph-dock { width: 168px; }
         .mini-graph-body { width: 168px; height: 156px; }
+      }
+
+      body.home-mode .shell {
+        width: 100%;
+        padding: 0;
+        margin: 0;
+      }
+
+      body.home-mode .hero {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+
+      body.home-mode .side,
+      body.home-mode .mini-graph-dock,
+      body.home-mode .stage-top {
+        display: none;
+      }
+
+      body.home-mode .stage::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background: radial-gradient(circle at 50% 50%, rgba(255, 248, 236, 0.08), rgba(255, 248, 236, 0) 55%);
+      }
+
+      body.home-mode .overlay {
+        z-index: 3;
+      }
+
+      body.home-mode .hotspot-label {
+        background: rgba(255, 250, 242, 0.9);
+        backdrop-filter: blur(10px);
+        font-size: 14px;
       }
     </style>
   </head>

@@ -67,6 +67,7 @@ function getRuntimeConfig() {
 
 const runtime = getRuntimeConfig();
 let activeHotspotId = runtime.hotspotId;
+const isHomeMode = runtime.source === 'miniapp-home';
 
 const canvas = document.getElementById('scene');
 const overlay = document.getElementById('overlay');
@@ -77,6 +78,12 @@ const hotspotHint = document.getElementById('hotspot-hint');
 const hotspotSummary = document.getElementById('hotspot-summary');
 const hotspotDetail = document.getElementById('hotspot-detail');
 const relatedNodes = document.getElementById('related-nodes');
+
+if (isHomeMode) {
+  document.body.classList.add('home-mode');
+  const stageEl = document.querySelector('.stage');
+  if (stageEl) stageEl.classList.add('home-only');
+}
 
 document.getElementById('mirror-title').textContent = mirror.name;
 document.getElementById('mirror-subtitle').textContent = `${mirror.subtitle} · ${runtime.mirrorId} · ${runtime.source}`;
@@ -167,7 +174,9 @@ function renderSidebar() {
 
 function setActiveHotspot(id) {
   activeHotspotId = id;
-  renderSidebar();
+  if (!isHomeMode) {
+    renderSidebar();
+  }
   hotspotEntries.forEach((entry) => {
     const active = entry.id === id;
     entry.dom.classList.toggle('active', active);
@@ -179,11 +188,12 @@ function setActiveHotspot(id) {
   });
   // 联动 mini 图谱
   const hot = hotspots.find((h) => h.id === id);
-  if (hot) renderMiniGraph(hot.graphNodeId);
+  if (hot && !isHomeMode) renderMiniGraph(hot.graphNodeId);
 }
 
 // 暴露给 mini-graph：通过 conceptId 反查 hotspot 并激活 3D
 function focusByConceptId(conceptId) {
+  if (isHomeMode) return;
   const hot = hotspots.find((h) => h.graphNodeId === conceptId);
   if (hot) {
     setActiveHotspot(hot.id);
@@ -365,13 +375,14 @@ async function bootstrap() {
     onNodeFocus: (conceptId) => focusByConceptId(conceptId),
     onNavigateMirror: (mirrorId) => navigateToMirror(mirrorId)
   });
-  // 全屏展开按钮绑定
-  const expandBtn = document.getElementById('mini-graph-expand');
-  if (expandBtn) expandBtn.addEventListener('click', () => {
-    const hot = getActiveHotspot();
-    openFullGraph(hot.graphNodeId, 2);
-  });
-  renderSidebar();
+  if (!isHomeMode) {
+    const expandBtn = document.getElementById('mini-graph-expand');
+    if (expandBtn) expandBtn.addEventListener('click', () => {
+      const hot = getActiveHotspot();
+      openFullGraph(hot.graphNodeId, 2);
+    });
+    renderSidebar();
+  }
   loadModel(mirror.modelUrl);
   resize();
   window.addEventListener('resize', resize);
