@@ -433,7 +433,10 @@
       }
 
       /* ===== 封面模式（入口页） ===== */
-      body.cover-mode { background: #0a0805; overflow: hidden; }
+      body.cover-mode { background: #1a0e06; overflow: hidden; }
+      body.cover-mode::before {
+        background: url("./assets/home-bg.png") center / cover no-repeat;
+      }
       body.cover-mode .shell { width: 100%; padding: 0; margin: 0; }
       body.cover-mode .hero { grid-template-columns: 1fr; gap: 0; }
       body.cover-mode .side,
@@ -443,30 +446,16 @@
       body.cover-mode::after { display: none; }
       body.cover-mode .stage-backdrop { display: none; }
 
-      /* 3D canvas 限制在中心圆环内 */
+      /* 3D canvas 限制在背景中央圆框内（略小于圆框） */
       body.cover-mode .stage canvas#scene {
         position: absolute;
         left: 50%;
         top: 50%;
-        width: min(78vw, 78vh);
-        height: min(78vw, 78vh);
+        width: min(58vw, 58vh);
+        height: min(58vw, 58vh);
         transform: translate(-50%, -50%);
         border-radius: 50%;
         z-index: 2;
-      }
-
-      /* 涂抹显色：灰阶覆盖 canvas */
-      .scratch-canvas {
-        position: absolute;
-        inset: 0;
-        z-index: 6;
-        touch-action: none;
-        cursor: crosshair;
-        transition: opacity 0.9s ease;
-      }
-      .scratch-canvas.revealed {
-        opacity: 0;
-        pointer-events: none;
       }
 
       .cover-ui {
@@ -477,23 +466,25 @@
       }
       .cover-ui[hidden] { display: none; }
 
-      /* 顶部右侧竖排标题 */
+      /* 顶部右侧竖排标题：瘦金体风格、深色 */
       .cover-title-vertical {
         position: absolute;
-        top: 48px;
-        right: 24px;
+        top: 56px;
+        right: 26px;
         writing-mode: vertical-rl;
         text-orientation: upright;
-        font-family: "STKaiti", "KaiTi", "STSong", "SimSun", "Source Han Serif SC", serif;
-        font-weight: 600;
-        font-size: clamp(30px, 6.4vw, 44px);
-        letter-spacing: 0.32em;
-        color: #e6c486;
+        font-family: "瘦金体", "Shou Jin Ti", "Slender Gold", "STXingkai",
+          "HanyiSentyPagoda", "STKaiti", "KaiTi", "STSong", serif;
+        font-weight: 300;
+        font-style: italic;
+        font-size: clamp(32px, 6.6vw, 46px);
+        letter-spacing: 0.34em;
+        color: #1a0c04;
         text-shadow:
-          0 2px 12px rgba(0, 0, 0, 0.7),
-          0 0 18px rgba(180, 110, 40, 0.45);
+          0 1px 0 rgba(255, 220, 170, 0.18),
+          0 2px 8px rgba(0, 0, 0, 0.18);
         pointer-events: none;
-        line-height: 1.1;
+        line-height: 1.05;
       }
       .cover-title-vertical::after {
         content: "";
@@ -501,67 +492,44 @@
         width: 1px;
         height: 38px;
         margin: 14px auto 0;
-        background: linear-gradient(180deg, #d9b574, rgba(217, 181, 116, 0));
-      }
-
-      /* 涂抹引导提示 */
-      .cover-hint {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        font-family: "STKaiti", "KaiTi", serif;
-        font-size: 13px;
-        letter-spacing: 0.5em;
-        color: rgba(232, 200, 145, 0.78);
-        text-shadow: 0 1px 6px rgba(0, 0, 0, 0.7);
-        pointer-events: none;
-        animation: hint-breathe 2.4s ease-in-out infinite;
-      }
-      .cover-hint.hidden { opacity: 0; transition: opacity 0.5s ease; }
-
-      @keyframes hint-breathe {
-        0%, 100% { opacity: 0.45; }
-        50% { opacity: 0.95; }
+        background: linear-gradient(180deg, #2a160a, rgba(42, 22, 10, 0));
       }
 
       /* 底部点击进入按钮：金线方框 */
       .cover-enter {
         position: absolute;
         left: 50%;
-        bottom: 56px;
+        bottom: 64px;
         transform: translateX(-50%);
         appearance: none;
         display: inline-flex;
         align-items: center;
         gap: 12px;
-        border: 1px solid rgba(217, 181, 116, 0.55);
-        background: linear-gradient(180deg, rgba(38, 22, 8, 0.45), rgba(20, 12, 4, 0.65));
-        color: #f0d9a8;
-        font-family: "STSong", "SimSun", serif;
+        border: 1px solid rgba(58, 32, 12, 0.55);
+        background: linear-gradient(180deg, rgba(245, 226, 188, 0.32), rgba(214, 184, 132, 0.42));
+        color: #2a160a;
+        font-family: "瘦金体", "Shou Jin Ti", "STKaiti", "KaiTi", "STSong", serif;
         font-size: 14px;
         font-weight: 500;
         letter-spacing: 0.5em;
         padding: 12px 26px 12px 30px;
         border-radius: 2px;
         cursor: pointer;
-        backdrop-filter: blur(8px);
-        -webkit-backdrop-filter: blur(8px);
+        backdrop-filter: blur(6px);
+        -webkit-backdrop-filter: blur(6px);
         box-shadow:
-          0 8px 22px rgba(0, 0, 0, 0.5),
-          inset 0 0 0 1px rgba(217, 181, 116, 0.18);
+          0 6px 18px rgba(40, 22, 8, 0.28),
+          inset 0 0 0 1px rgba(58, 32, 12, 0.18);
         pointer-events: auto;
-        transition: opacity 0.4s ease, transform 0.18s ease;
-        opacity: 0;
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
       }
-      .cover-enter.show { opacity: 1; }
       .cover-enter:active { transform: translateX(-50%) translateY(1px); }
       .cover-enter::before,
       .cover-enter::after {
         content: "";
         width: 14px;
         height: 1px;
-        background: linear-gradient(90deg, rgba(217, 181, 116, 0), #d9b574, rgba(217, 181, 116, 0));
+        background: linear-gradient(90deg, rgba(58, 32, 12, 0), #3a200c, rgba(58, 32, 12, 0));
       }
     </style>
   </head>
@@ -577,11 +545,8 @@
           <canvas id="scene"></canvas>
           <div class="overlay" id="overlay"></div>
 
-          <canvas class="scratch-canvas" id="scratch-canvas" hidden></canvas>
-
           <div class="cover-ui" id="cover-ui" hidden>
             <div class="cover-title-vertical" id="cover-title">镜中纹</div>
-            <div class="cover-hint" id="cover-hint">轻 触 拂 拭</div>
             <button class="cover-enter" id="cover-enter">点 击 进 入</button>
           </div>
 
