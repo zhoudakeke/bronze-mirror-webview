@@ -82,7 +82,7 @@ document.getElementById('mirror-title').textContent = mirror.name;
 document.getElementById('mirror-subtitle').textContent = `${mirror.subtitle} · ${runtime.mirrorId} · ${runtime.source}`;
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xf8f3ea);
+scene.background = null;
 
 const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
 renderer.outputColorSpace = THREE.SRGBColorSpace;
