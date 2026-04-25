@@ -98,8 +98,8 @@ if (isCoverMode) {
   const enterBtn = document.getElementById('cover-enter');
   if (enterBtn) {
     enterBtn.addEventListener('click', () => {
-      if (typeof wx !== 'undefined' && wx.miniProgram && typeof wx.miniProgram.switchTab === 'function') {
-        wx.miniProgram.switchTab({ url: '/pages/home/index' });
+      if (typeof wx !== 'undefined' && wx.miniProgram && typeof wx.miniProgram.navigateTo === 'function') {
+        wx.miniProgram.navigateTo({ url: `/pages/detail/index?mirrorId=${encodeURIComponent(runtime.mirrorId)}` });
       } else {
         console.log('[cover] enter clicked (browser mode)');
       }
@@ -347,7 +347,8 @@ function attachModel(gltf, fallback = false) {
   const fitScale = 1 / (Math.max(size.x, size.y, size.z) || 1);
 
   model.position.sub(center);
-  model.scale.setScalar(fitScale);
+  const fitFactor = isCoverMode ? 0.62 : 1;
+  model.scale.setScalar(fitScale * fitFactor);
   model.traverse((child) => {
     if (child.isMesh && child.material) {
       child.material.side = THREE.DoubleSide;
