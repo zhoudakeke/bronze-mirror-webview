@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+<title>简约古风圆形_2_月白_莲瓣</title>
+
+<!-- 整体纯色填充 -->
+<circle cx="256" cy="256" r="228" fill="#EEF3F2"/>
+
+<!-- 简约细边框 -->
+<circle cx="256" cy="256" r="228" fill="none" stroke="#7E9792" stroke-width="1.6" opacity="0.85"/>
+<circle cx="256" cy="256" r="220" fill="none" stroke="#9FB6B2" stroke-width="1.2" opacity="0.9"/>
+<circle cx="256" cy="256" r="206" fill="none" stroke="#9FB6B2" stroke-width="0.9" opacity="0.65"/>
+
+<!-- 仅在边缘做一圈很细的纹样 -->
+<g opacity="0.95">
+<path d="M233.6,53.2 Q256.0,34.0 278.4,53.2" fill="none" stroke="#9FB6B2" stroke-width="2.1" stroke-linecap="round"/>
+<path d="M297.4,56.2 Q324.6,44.9 339.9,70.1" fill="none" stroke="#9FB6B2" stroke-width="2.1" stroke-linecap="round"/>
+<path d="M357.1,78.8 Q386.5,76.4 393.3,105.1" fill="none" stroke="#9FB6B2" stroke-width="2.1" stroke-linecap="round"/>
+<path d="M406.9,118.7 Q435.6,125.5 433.2,154.9" fill="none" stroke="#9FB6B2" stroke-width="2.1" stroke-linecap="round"/>
+<path d="M441.9,172.1 Q467.1,187.4 455.8,214.6" fill="none" stroke="#9FB6B2" stroke-width="2.1" stroke-linecap="round"/>
+<path d="M458.8,233.6 Q478.0,256.0 458.8,278.4" fill="none" stroke="#9FB6B2" stroke-width="2.1" stroke-linecap="round"/>
+<path d="M455.8,297.4 Q467.1,324.6 441.9,339.9" fill="none" stroke="#9FB6B2" stroke-width="2.1" stroke-linecap="round"/>
+<path d="M433.2,357.1 Q435.6,386.5 406.9,393.3" fill="none" stroke="#9FB6B2" stroke-width="2.1" stroke-linecap="round"/>
+<path d="M393.3,406.9 Q386.5,435.6 357.1,433.2" fill="none" stroke="#9FB6B2" stroke-width="2.1" stroke-linecap="round"/>
+<path d="M339.9,441.9 Q324.6,467.1 297.4,455.8" fill="none" stroke="#9FB6B2" stroke-width="2.1" stroke-linecap="round"/>
+<path d="M278.4,458.8 Q256.0,478.0 233.6,458.8" fill="none" stroke="#9FB6B2" stroke-width="2.1" stroke-linecap="round"/>
+<path d="M214.6,455.8 Q187.4,467.1 172.1,441.9" fill="none" stroke="#9FB6B2" stroke-width="2.1" stroke-linecap="round"/>
+<path d="M154.9,433.2 Q125.5,435.6 118.7,406.9" fill="none" stroke="#9FB6B2" stroke-width="2.1" stroke-linecap="round"/>
+<path d="M105.1,393.3 Q76.4,386.5 78.8,357.1" fill="none" stroke="#9FB6B2" stroke-width="2.1" stroke-linecap="round"/>
+<path d="M70.1,339.9 Q44.9,324.6 56.2,297.4" fill="none" stroke="#9FB6B2" stroke-width="2.1" stroke-linecap="round"/>
+<path d="M53.2,278.4 Q34.0,256.0 53.2,233.6" fill="none" stroke="#9FB6B2" stroke-width="2.1" stroke-linecap="round"/>
+<path d="M56.2,214.6 Q44.9,187.4 70.1,172.1" fill="none" stroke="#9FB6B2" stroke-width="2.1" stroke-linecap="round"/>
+<path d="M78.8,154.9 Q76.4,125.5 105.1,118.7" fill="none" stroke="#9FB6B2" stroke-width="2.1" stroke-linecap="round"/>
+<path d="M118.7,105.1 Q125.5,76.4 154.9,78.8" fill="none" stroke="#9FB6B2" stroke-width="2.1" stroke-linecap="round"/>
+<path d="M172.1,70.1 Q187.4,44.9 214.6,56.2" fill="none" stroke="#9FB6B2" stroke-width="2.1" stroke-linecap="round"/>
+</g>
+</svg>

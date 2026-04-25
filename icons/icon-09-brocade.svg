@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+<title>简约古风圆形_10_茶白_锦纹</title>
+
+<!-- 整体纯色填充 -->
+<circle cx="256" cy="256" r="228" fill="#F6F2ED"/>
+
+<!-- 简约细边框 -->
+<circle cx="256" cy="256" r="228" fill="none" stroke="#947D66" stroke-width="1.6" opacity="0.85"/>
+<circle cx="256" cy="256" r="220" fill="none" stroke="#BDA78E" stroke-width="1.2" opacity="0.9"/>
+<circle cx="256" cy="256" r="206" fill="none" stroke="#BDA78E" stroke-width="0.9" opacity="0.65"/>
+
+<!-- 仅在边缘做一圈很细的纹样 -->
+<g opacity="0.95">
+<rect x="465.5" y="251.5" width="9" height="9" fill="none" stroke="#BDA78E" stroke-width="1.6" transform="rotate(45 470.0 256.0)"/>
+<rect x="452.6" y="324.7" width="9" height="9" fill="none" stroke="#BDA78E" stroke-width="1.6" transform="rotate(45 457.1 329.2)"/>
+<rect x="415.4" y="389.1" width="9" height="9" fill="none" stroke="#BDA78E" stroke-width="1.6" transform="rotate(45 419.9 393.6)"/>
+<rect x="358.5" y="436.8" width="9" height="9" fill="none" stroke="#BDA78E" stroke-width="1.6" transform="rotate(45 363.0 441.3)"/>
+<rect x="288.7" y="462.2" width="9" height="9" fill="none" stroke="#BDA78E" stroke-width="1.6" transform="rotate(45 293.2 466.7)"/>
+<rect x="214.3" y="462.2" width="9" height="9" fill="none" stroke="#BDA78E" stroke-width="1.6" transform="rotate(45 218.8 466.7)"/>
+<rect x="144.5" y="436.8" width="9" height="9" fill="none" stroke="#BDA78E" stroke-width="1.6" transform="rotate(45 149.0 441.3)"/>
+<rect x="87.6" y="389.1" width="9" height="9" fill="none" stroke="#BDA78E" stroke-width="1.6" transform="rotate(45 92.1 393.6)"/>
+<rect x="50.4" y="324.7" width="9" height="9" fill="none" stroke="#BDA78E" stroke-width="1.6" transform="rotate(45 54.9 329.2)"/>
+<rect x="37.5" y="251.5" width="9" height="9" fill="none" stroke="#BDA78E" stroke-width="1.6" transform="rotate(45 42.0 256.0)"/>
+<rect x="50.4" y="178.3" width="9" height="9" fill="none" stroke="#BDA78E" stroke-width="1.6" transform="rotate(45 54.9 182.8)"/>
+<rect x="87.6" y="113.9" width="9" height="9" fill="none" stroke="#BDA78E" stroke-width="1.6" transform="rotate(45 92.1 118.4)"/>
+<rect x="144.5" y="66.2" width="9" height="9" fill="none" stroke="#BDA78E" stroke-width="1.6" transform="rotate(45 149.0 70.7)"/>
+<rect x="214.3" y="40.8" width="9" height="9" fill="none" stroke="#BDA78E" stroke-width="1.6" transform="rotate(45 218.8 45.3)"/>
+<rect x="288.7" y="40.8" width="9" height="9" fill="none" stroke="#BDA78E" stroke-width="1.6" transform="rotate(45 293.2 45.3)"/>
+<rect x="358.5" y="66.2" width="9" height="9" fill="none" stroke="#BDA78E" stroke-width="1.6" transform="rotate(45 363.0 70.7)"/>
+<rect x="415.4" y="113.9" width="9" height="9" fill="none" stroke="#BDA78E" stroke-width="1.6" transform="rotate(45 419.9 118.4)"/>
+<rect x="452.6" y="178.3" width="9" height="9" fill="none" stroke="#BDA78E" stroke-width="1.6" transform="rotate(45 457.1 182.8)"/>
+</g>
+</svg>

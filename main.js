@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { initGraphUI, renderMiniGraph, openFullGraph } from './mini-graph.js';
 
 const mirror = {
   id: 'M001',
@@ -10,23 +11,9 @@ const mirror = {
   fallbackUrl: './models/mirror-flat.glb'
 };
 
-const graphNodes = {
-  'node-grape-pattern': { label: '葡萄纹', type: '纹饰', note: '葡萄纹与唐代文化交流和吉祥寓意相关。' },
-  'node-sea-beast': { label: '海兽纹', type: '题材', note: '海兽纹连接神兽想象、装饰美学与时代风尚。' },
-  'node-knob': { label: '镜钮', type: '结构', note: '镜钮承担背面中心结构作用，也关联拿持和悬挂方式。' },
-  'node-outer-band': { label: '外缘带', type: '布局', note: '外缘带帮助理解镜背布局、纹饰分区与观看路径。' },
-  'node-tang': { label: '唐代', type: '时代', note: '用于解释铜镜纹饰流行背景和工艺特征。' },
-  'node-silk-road': { label: '丝绸之路', type: '文化', note: '帮助理解纹样传播与跨区域交流的关系。' }
-};
-
-const graphEdges = [
-  ['node-grape-pattern', 'node-tang'],
-  ['node-grape-pattern', 'node-silk-road'],
-  ['node-grape-pattern', 'node-sea-beast'],
-  ['node-sea-beast', 'node-tang'],
-  ['node-knob', 'node-tang'],
-  ['node-outer-band', 'node-grape-pattern']
-];
+// 图谱数据（运行时由 loadGraph() 填充）
+let graphData = { version: 0, types: {}, concepts: [], edges: [] };
+const conceptById = new Map();
 
 const hotspots = [
   {
@@ -133,13 +120,23 @@ function getActiveHotspot() {
   return hotspots.find((item) => item.id === activeHotspotId) || hotspots[0];
 }
 
-function getRelatedNodes(nodeId) {
-  const ids = new Set([nodeId]);
-  graphEdges.forEach(([a, b]) => {
-    if (a === nodeId) ids.add(b);
-    if (b === nodeId) ids.add(a);
-  });
-  return [...ids].map((id) => ({ id, ...graphNodes[id] })).filter(Boolean);
+// 基于图数据返回某节点的 1 跳邻居（含自己）
+function getRelatedConcepts(nodeId, depth = 1) {
+  const visited = new Map();
+  visited.set(nodeId, 0);
+  const queue = [[nodeId, 0]];
+  while (queue.length) {
+    const [cur, d] = queue.shift();
+    if (d >= depth) continue;
+    graphData.edges.forEach((e) => {
+      const next = e.source === cur ? e.target : e.target === cur ? e.source : null;
+      if (next && !visited.has(next)) {
+        visited.set(next, d + 1);
+        queue.push([next, d + 1]);
+      }
+    });
+  }
+  return [...visited.keys()].map((id) => conceptById.get(id)).filter(Boolean);
 }
 
 function renderSidebar() {
@@ -159,10 +156,11 @@ function renderSidebar() {
   });
 
   relatedNodes.innerHTML = '';
-  getRelatedNodes(active.graphNodeId).forEach((node) => {
+  getRelatedConcepts(active.graphNodeId, 1).forEach((node) => {
+    const typeLabel = graphData.types[node.type]?.label || node.type;
     const card = document.createElement('div');
     card.className = 'node';
-    card.innerHTML = `<div class="node-title">${node.label}</div><div class="node-meta">${node.type}</div><div class="node-copy">${node.note}</div>`;
+    card.innerHTML = `<div class="node-title">${node.label}</div><div class="node-meta">${typeLabel}</div><div class="node-copy">${node.summary || ''}</div>`;
     relatedNodes.appendChild(card);
   });
 }
@@ -179,6 +177,44 @@ function setActiveHotspot(id) {
     entry.pulse.material.color.set(active ? 0x7f9a8d : 0xb57a3e);
     entry.baseScale = active ? 1.14 : 1;
   });
+  // 联动 mini 图谱
+  const hot = hotspots.find((h) => h.id === id);
+  if (hot) renderMiniGraph(hot.graphNodeId);
+}
+
+// 暴露给 mini-graph：通过 conceptId 反查 hotspot 并激活 3D
+function focusByConceptId(conceptId) {
+  const hot = hotspots.find((h) => h.graphNodeId === conceptId);
+  if (hot) {
+    setActiveHotspot(hot.id);
+  } else {
+    // 不在 3D 模型上的纯概念节点：仅刷新右侧"关联知识"列表，标题切换为概念
+    const concept = conceptById.get(conceptId);
+    if (!concept) return;
+    hotspotTitle.textContent = concept.label;
+    hotspotHint.textContent = graphData.types[concept.type]?.label || concept.type;
+    hotspotSummary.textContent = concept.summary || '';
+    hotspotDetail.textContent = concept.detail || '';
+    relatedNodes.innerHTML = '';
+    getRelatedConcepts(conceptId, 1).forEach((node) => {
+      const typeLabel = graphData.types[node.type]?.label || node.type;
+      const card = document.createElement('div');
+      card.className = 'node';
+      card.innerHTML = `<div class="node-title">${node.label}</div><div class="node-meta">${typeLabel}</div><div class="node-copy">${node.summary || ''}</div>`;
+      relatedNodes.appendChild(card);
+    });
+    renderMiniGraph(conceptId);
+  }
+}
+
+function navigateToMirror(mirrorId) {
+  // 在小程序 web-view 内回跳 detail；在浏览器内仅日志占位
+  if (typeof wx !== 'undefined' && wx.miniProgram && typeof wx.miniProgram.navigateTo === 'function') {
+    wx.miniProgram.navigateTo({ url: `/pages/detail/index?mirrorId=${encodeURIComponent(mirrorId)}` });
+  } else {
+    console.log('[navigateToMirror]', mirrorId);
+    statusEl.textContent = `（占位）跳转铜镜 ${mirrorId}`;
+  }
 }
 
 function createHotspots() {
@@ -296,7 +332,18 @@ function loadModel(url, fallback = false) {
   );
 }
 
-loadModel(mirror.modelUrl);
+async function loadGraph() {
+  try {
+    const res = await fetch('./data/graph.json', { cache: 'no-cache' });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    graphData = await res.json();
+    conceptById.clear();
+    graphData.concepts.forEach((c) => conceptById.set(c.id, c));
+  } catch (err) {
+    console.error('[loadGraph] failed', err);
+    statusEl.textContent = `图谱数据加载失败：${err.message}`;
+  }
+}
 
 function animate() {
   const elapsed = clock.getElapsedTime();
@@ -311,7 +358,24 @@ function animate() {
   requestAnimationFrame(animate);
 }
 
-renderSidebar();
-resize();
-window.addEventListener('resize', resize);
-animate();
+async function bootstrap() {
+  await loadGraph();
+  initGraphUI({
+    getGraphData: () => graphData,
+    onNodeFocus: (conceptId) => focusByConceptId(conceptId),
+    onNavigateMirror: (mirrorId) => navigateToMirror(mirrorId)
+  });
+  // 全屏展开按钮绑定
+  const expandBtn = document.getElementById('mini-graph-expand');
+  if (expandBtn) expandBtn.addEventListener('click', () => {
+    const hot = getActiveHotspot();
+    openFullGraph(hot.graphNodeId, 2);
+  });
+  renderSidebar();
+  loadModel(mirror.modelUrl);
+  resize();
+  window.addEventListener('resize', resize);
+  animate();
+}
+
+bootstrap();

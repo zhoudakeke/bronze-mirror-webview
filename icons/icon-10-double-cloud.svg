@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+<title>简约古风圆形_11_丁香_双线云纹</title>
+
+<!-- 整体纯色填充 -->
+<circle cx="256" cy="256" r="228" fill="#F0EDF6"/>
+
+<!-- 简约细边框 -->
+<circle cx="256" cy="256" r="228" fill="none" stroke="#8578A2" stroke-width="1.6" opacity="0.85"/>
+<circle cx="256" cy="256" r="220" fill="none" stroke="#A99CC7" stroke-width="1.2" opacity="0.9"/>
+<circle cx="256" cy="256" r="206" fill="none" stroke="#A99CC7" stroke-width="0.9" opacity="0.65"/>
+
+<!-- 仅在边缘做一圈很细的纹样 -->
+<g opacity="0.95">
+
+        <g transform="rotate(90 466.0 256.0)">
+            <path d="M452.0,256.0
+                     c4,-8 14,-8 18,0
+                     c4,-6 12,-6 16,0
+                     c4,8 -4,12 -12,10
+                     c-4,5 -13,5 -18,0"
+                  fill="none" stroke="#A99CC7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        
+
+        <g transform="rotate(135 404.5 404.5)">
+            <path d="M390.5,404.5
+                     c4,-8 14,-8 18,0
+                     c4,-6 12,-6 16,0
+                     c4,8 -4,12 -12,10
+                     c-4,5 -13,5 -18,0"
+                  fill="none" stroke="#A99CC7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        
+
+        <g transform="rotate(180 256.0 466.0)">
+            <path d="M242.0,466.0
+                     c4,-8 14,-8 18,0
+                     c4,-6 12,-6 16,0
+                     c4,8 -4,12 -12,10
+                     c-4,5 -13,5 -18,0"
+                  fill="none" stroke="#A99CC7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        
+
+        <g transform="rotate(225 107.5 404.5)">
+            <path d="M93.5,404.5
+                     c4,-8 14,-8 18,0
+                     c4,-6 12,-6 16,0
+                     c4,8 -4,12 -12,10
+                     c-4,5 -13,5 -18,0"
+                  fill="none" stroke="#A99CC7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        
+
+        <g transform="rotate(270 46.0 256.0)">
+            <path d="M32.0,256.0
+                     c4,-8 14,-8 18,0
+                     c4,-6 12,-6 16,0
+                     c4,8 -4,12 -12,10
+                     c-4,5 -13,5 -18,0"
+                  fill="none" stroke="#A99CC7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        
+
+        <g transform="rotate(315 107.5 107.5)">
+            <path d="M93.5,107.5
+                     c4,-8 14,-8 18,0
+                     c4,-6 12,-6 16,0
+                     c4,8 -4,12 -12,10
+                     c-4,5 -13,5 -18,0"
+                  fill="none" stroke="#A99CC7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        
+
+        <g transform="rotate(360 256.0 46.0)">
+            <path d="M242.0,46.0
+                     c4,-8 14,-8 18,0
+                     c4,-6 12,-6 16,0
+                     c4,8 -4,12 -12,10
+                     c-4,5 -13,5 -18,0"
+                  fill="none" stroke="#A99CC7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        
+
+        <g transform="rotate(405 404.5 107.5)">
+            <path d="M390.5,107.5
+                     c4,-8 14,-8 18,0
+                     c4,-6 12,-6 16,0
+                     c4,8 -4,12 -12,10
+                     c-4,5 -13,5 -18,0"
+                  fill="none" stroke="#A99CC7" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        
+<circle cx="454.0" cy="256.0" r="2.8" fill="#A99CC7"/>
+<circle cx="447.3" cy="307.2" r="2.8" fill="#A99CC7"/>
+<circle cx="427.5" cy="355.0" r="2.8" fill="#A99CC7"/>
+<circle cx="396.0" cy="396.0" r="2.8" fill="#A99CC7"/>
+<circle cx="355.0" cy="427.5" r="2.8" fill="#A99CC7"/>
+<circle cx="307.2" cy="447.3" r="2.8" fill="#A99CC7"/>
+<circle cx="256.0" cy="454.0" r="2.8" fill="#A99CC7"/>
+<circle cx="204.8" cy="447.3" r="2.8" fill="#A99CC7"/>
+<circle cx="157.0" cy="427.5" r="2.8" fill="#A99CC7"/>
+<circle cx="116.0" cy="396.0" r="2.8" fill="#A99CC7"/>
+<circle cx="84.5" cy="355.0" r="2.8" fill="#A99CC7"/>
+<circle cx="64.7" cy="307.2" r="2.8" fill="#A99CC7"/>
+<circle cx="58.0" cy="256.0" r="2.8" fill="#A99CC7"/>
+<circle cx="64.7" cy="204.8" r="2.8" fill="#A99CC7"/>
+<circle cx="84.5" cy="157.0" r="2.8" fill="#A99CC7"/>
+<circle cx="116.0" cy="116.0" r="2.8" fill="#A99CC7"/>
+<circle cx="157.0" cy="84.5" r="2.8" fill="#A99CC7"/>
+<circle cx="204.8" cy="64.7" r="2.8" fill="#A99CC7"/>
+<circle cx="256.0" cy="58.0" r="2.8" fill="#A99CC7"/>
+<circle cx="307.2" cy="64.7" r="2.8" fill="#A99CC7"/>
+<circle cx="355.0" cy="84.5" r="2.8" fill="#A99CC7"/>
+<circle cx="396.0" cy="116.0" r="2.8" fill="#A99CC7"/>
+<circle cx="427.5" cy="157.0" r="2.8" fill="#A99CC7"/>
+<circle cx="447.3" cy="204.8" r="2.8" fill="#A99CC7"/>
+</g>
+</svg>

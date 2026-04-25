@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+<title>简约古风圆形_7_浅黛_折枝叶</title>
+
+<!-- 整体纯色填充 -->
+<circle cx="256" cy="256" r="228" fill="#EDF0F2"/>
+
+<!-- 简约细边框 -->
+<circle cx="256" cy="256" r="228" fill="none" stroke="#6E7D8E" stroke-width="1.6" opacity="0.85"/>
+<circle cx="256" cy="256" r="220" fill="none" stroke="#92A2B4" stroke-width="1.2" opacity="0.9"/>
+<circle cx="256" cy="256" r="206" fill="none" stroke="#92A2B4" stroke-width="0.9" opacity="0.65"/>
+
+<!-- 仅在边缘做一圈很细的纹样 -->
+<g opacity="0.95">
+<ellipse cx="470.0" cy="256.0" rx="4.8" ry="9.5" fill="none" stroke="#92A2B4" stroke-width="1.8" transform="rotate(0.0 470.0 256.0)"/>
+<ellipse cx="448.8" cy="348.9" rx="4.8" ry="9.5" fill="none" stroke="#92A2B4" stroke-width="1.8" transform="rotate(25.714285714285715 448.8 348.9)"/>
+<ellipse cx="389.4" cy="423.3" rx="4.8" ry="9.5" fill="none" stroke="#92A2B4" stroke-width="1.8" transform="rotate(51.42857142857143 389.4 423.3)"/>
+<ellipse cx="303.6" cy="464.6" rx="4.8" ry="9.5" fill="none" stroke="#92A2B4" stroke-width="1.8" transform="rotate(77.14285714285714 303.6 464.6)"/>
+<ellipse cx="208.4" cy="464.6" rx="4.8" ry="9.5" fill="none" stroke="#92A2B4" stroke-width="1.8" transform="rotate(102.85714285714286 208.4 464.6)"/>
+<ellipse cx="122.6" cy="423.3" rx="4.8" ry="9.5" fill="none" stroke="#92A2B4" stroke-width="1.8" transform="rotate(128.57142857142858 122.6 423.3)"/>
+<ellipse cx="63.2" cy="348.9" rx="4.8" ry="9.5" fill="none" stroke="#92A2B4" stroke-width="1.8" transform="rotate(154.28571428571428 63.2 348.9)"/>
+<ellipse cx="42.0" cy="256.0" rx="4.8" ry="9.5" fill="none" stroke="#92A2B4" stroke-width="1.8" transform="rotate(180.0 42.0 256.0)"/>
+<ellipse cx="63.2" cy="163.1" rx="4.8" ry="9.5" fill="none" stroke="#92A2B4" stroke-width="1.8" transform="rotate(205.71428571428572 63.2 163.1)"/>
+<ellipse cx="122.6" cy="88.7" rx="4.8" ry="9.5" fill="none" stroke="#92A2B4" stroke-width="1.8" transform="rotate(231.42857142857142 122.6 88.7)"/>
+<ellipse cx="208.4" cy="47.4" rx="4.8" ry="9.5" fill="none" stroke="#92A2B4" stroke-width="1.8" transform="rotate(257.14285714285717 208.4 47.4)"/>
+<ellipse cx="303.6" cy="47.4" rx="4.8" ry="9.5" fill="none" stroke="#92A2B4" stroke-width="1.8" transform="rotate(282.85714285714283 303.6 47.4)"/>
+<ellipse cx="389.4" cy="88.7" rx="4.8" ry="9.5" fill="none" stroke="#92A2B4" stroke-width="1.8" transform="rotate(308.57142857142856 389.4 88.7)"/>
+<ellipse cx="448.8" cy="163.1" rx="4.8" ry="9.5" fill="none" stroke="#92A2B4" stroke-width="1.8" transform="rotate(334.2857142857143 448.8 163.1)"/>
+</g>
+</svg>

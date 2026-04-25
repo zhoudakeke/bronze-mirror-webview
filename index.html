@@ -8,7 +8,8 @@
       {
         "imports": {
           "three": "https://unpkg.com/three@0.162.0/build/three.module.js",
-          "three/addons/": "https://unpkg.com/three@0.162.0/examples/jsm/"
+          "three/addons/": "https://unpkg.com/three@0.162.0/examples/jsm/",
+          "cytoscape": "https://cdn.jsdelivr.net/npm/cytoscape@3.30.0/dist/cytoscape.esm.min.js"
         }
       }
     </script>
@@ -244,6 +245,111 @@
         100% { transform: translate(-50%, -50%) scale(0.92); opacity: 0.5; }
       }
 
+      /* ===== mini 图谱抽屉（右下悬浮） ===== */
+      .mini-graph-dock {
+        position: absolute;
+        right: 14px;
+        bottom: 14px;
+        z-index: 6;
+        width: 196px;
+        background: rgba(255, 250, 242, 0.92);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        box-shadow: 0 14px 32px rgba(46, 32, 18, 0.16);
+        backdrop-filter: blur(10px);
+        overflow: hidden;
+        transition: transform 0.25s ease, opacity 0.25s ease;
+      }
+      .mini-graph-dock.collapsed .mini-graph-body { display: none; }
+      .mini-graph-dock.collapsed { width: auto; }
+      .mini-graph-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 8px 12px;
+        font-size: 12px;
+        color: var(--muted);
+        border-bottom: 1px solid rgba(153,112,64,0.12);
+      }
+      .mini-graph-dock.collapsed .mini-graph-head { border-bottom: 0; }
+      .mini-graph-head .dot {
+        width: 8px; height: 8px; border-radius: 50%;
+        background: var(--bronze); display: inline-block; margin-right: 6px;
+      }
+      .mini-graph-actions { display: flex; gap: 4px; }
+      .mini-graph-btn {
+        border: 0; background: transparent; color: var(--muted);
+        cursor: pointer; padding: 2px 6px; font-size: 13px; line-height: 1;
+        border-radius: 6px;
+      }
+      .mini-graph-btn:hover { background: rgba(152,99,51,0.10); color: var(--text); }
+      .mini-graph-body {
+        width: 196px; height: 180px;
+        background: rgba(255, 250, 242, 0.6);
+      }
+      #mini-graph-canvas { width: 100%; height: 100%; }
+
+      /* ===== 全屏图谱浮层 ===== */
+      .graph-fullscreen {
+        position: fixed; inset: 0; z-index: 50;
+        background: rgba(243, 234, 219, 0.96);
+        backdrop-filter: blur(8px);
+        display: flex; flex-direction: column;
+      }
+      .graph-fullscreen[hidden] { display: none; }
+      .graph-fullscreen-head {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 14px 18px;
+        border-bottom: 1px solid var(--border);
+        background: rgba(255, 250, 242, 0.85);
+      }
+      .graph-fullscreen-title {
+        font-weight: 700; font-size: 16px;
+      }
+      .graph-fullscreen-sub {
+        font-size: 12px; color: var(--muted); margin-left: 8px;
+      }
+      .graph-fullscreen-close {
+        border: 1px solid var(--border); background: rgba(255,250,242,0.95);
+        padding: 6px 12px; border-radius: 999px; cursor: pointer;
+        color: var(--text); font-size: 13px;
+      }
+      .graph-fullscreen-canvas {
+        flex: 1; position: relative; overflow: hidden;
+      }
+      #full-graph-canvas { width: 100%; height: 100%; }
+
+      .graph-detail-card {
+        position: absolute; left: 16px; right: 16px; bottom: 16px;
+        background: rgba(255, 250, 242, 0.96);
+        border: 1px solid var(--border);
+        border-radius: 18px;
+        padding: 14px 16px;
+        box-shadow: 0 14px 32px rgba(46, 32, 18, 0.18);
+        max-width: 520px;
+        margin: 0 auto;
+        transform: translateY(120%);
+        transition: transform 0.28s ease;
+      }
+      .graph-detail-card.show { transform: translateY(0); }
+      .graph-detail-meta {
+        font-size: 12px; color: var(--bronze); margin-bottom: 4px;
+      }
+      .graph-detail-title { font-weight: 700; font-size: 17px; margin-bottom: 6px; }
+      .graph-detail-summary { color: var(--muted); line-height: 1.6; font-size: 14px; }
+      .graph-detail-actions {
+        display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap;
+      }
+      .graph-detail-btn {
+        border: 1px solid var(--border);
+        background: rgba(255, 250, 242, 0.95);
+        color: var(--text);
+        padding: 8px 14px; border-radius: 999px; font-size: 13px; cursor: pointer;
+      }
+      .graph-detail-btn.primary {
+        color: #fff; background: var(--bronze); border-color: var(--bronze);
+      }
+
       @media (max-width: 960px) {
         .hero {
           grid-template-columns: 1fr;
@@ -252,6 +358,9 @@
         .stage {
           min-height: 62vh;
         }
+
+        .mini-graph-dock { width: 168px; }
+        .mini-graph-body { width: 168px; height: 156px; }
       }
     </style>
   </head>
@@ -265,6 +374,19 @@
           </div>
           <canvas id="scene"></canvas>
           <div class="overlay" id="overlay"></div>
+
+          <div class="mini-graph-dock" id="mini-graph-dock">
+            <div class="mini-graph-head">
+              <span><span class="dot"></span>知识图谱</span>
+              <span class="mini-graph-actions">
+                <button class="mini-graph-btn" id="mini-graph-expand" title="展开">⤢</button>
+                <button class="mini-graph-btn" id="mini-graph-toggle" title="收起">－</button>
+              </span>
+            </div>
+            <div class="mini-graph-body">
+              <div id="mini-graph-canvas"></div>
+            </div>
+          </div>
         </section>
 
         <aside class="side">
@@ -287,6 +409,25 @@
             <div class="node-list" id="related-nodes"></div>
           </div>
         </aside>
+      </div>
+    </div>
+
+    <div class="graph-fullscreen" id="graph-fullscreen" hidden>
+      <div class="graph-fullscreen-head">
+        <div>
+          <span class="graph-fullscreen-title">知识图谱</span>
+          <span class="graph-fullscreen-sub" id="graph-fullscreen-sub">焦点 · 2 跳子图</span>
+        </div>
+        <button class="graph-fullscreen-close" id="graph-fullscreen-close">关闭 ✕</button>
+      </div>
+      <div class="graph-fullscreen-canvas">
+        <div id="full-graph-canvas"></div>
+        <div class="graph-detail-card" id="graph-detail-card">
+          <div class="graph-detail-meta" id="graph-detail-meta"></div>
+          <div class="graph-detail-title" id="graph-detail-title"></div>
+          <div class="graph-detail-summary" id="graph-detail-summary"></div>
+          <div class="graph-detail-actions" id="graph-detail-actions"></div>
+        </div>
       </div>
     </div>
 

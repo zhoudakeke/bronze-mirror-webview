@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+<title>简约古风圆形_6_杏子灰_珠链</title>
+
+<!-- 整体纯色填充 -->
+<circle cx="256" cy="256" r="228" fill="#F3F0EA"/>
+
+<!-- 简约细边框 -->
+<circle cx="256" cy="256" r="228" fill="none" stroke="#8C7D6B" stroke-width="1.6" opacity="0.85"/>
+<circle cx="256" cy="256" r="220" fill="none" stroke="#B2A18C" stroke-width="1.2" opacity="0.9"/>
+<circle cx="256" cy="256" r="206" fill="none" stroke="#B2A18C" stroke-width="0.9" opacity="0.65"/>
+
+<!-- 仅在边缘做一圈很细的纹样 -->
+<g opacity="0.95">
+<circle cx="470.0" cy="256.0" r="2.8" fill="#B2A18C"/>
+<circle cx="467.6" cy="287.9" r="2.8" fill="#B2A18C"/>
+<circle cx="460.5" cy="319.1" r="2.8" fill="#B2A18C"/>
+<circle cx="448.8" cy="348.9" r="2.8" fill="#B2A18C"/>
+<circle cx="432.8" cy="376.6" r="2.8" fill="#B2A18C"/>
+<circle cx="412.9" cy="401.6" r="2.8" fill="#B2A18C"/>
+<circle cx="389.4" cy="423.3" r="2.8" fill="#B2A18C"/>
+<circle cx="363.0" cy="441.3" r="2.8" fill="#B2A18C"/>
+<circle cx="334.2" cy="455.2" r="2.8" fill="#B2A18C"/>
+<circle cx="303.6" cy="464.6" r="2.8" fill="#B2A18C"/>
+<circle cx="272.0" cy="469.4" r="2.8" fill="#B2A18C"/>
+<circle cx="240.0" cy="469.4" r="2.8" fill="#B2A18C"/>
+<circle cx="208.4" cy="464.6" r="2.8" fill="#B2A18C"/>
+<circle cx="177.8" cy="455.2" r="2.8" fill="#B2A18C"/>
+<circle cx="149.0" cy="441.3" r="2.8" fill="#B2A18C"/>
+<circle cx="122.6" cy="423.3" r="2.8" fill="#B2A18C"/>
+<circle cx="99.1" cy="401.6" r="2.8" fill="#B2A18C"/>
+<circle cx="79.2" cy="376.6" r="2.8" fill="#B2A18C"/>
+<circle cx="63.2" cy="348.9" r="2.8" fill="#B2A18C"/>
+<circle cx="51.5" cy="319.1" r="2.8" fill="#B2A18C"/>
+<circle cx="44.4" cy="287.9" r="2.8" fill="#B2A18C"/>
+<circle cx="42.0" cy="256.0" r="2.8" fill="#B2A18C"/>
+<circle cx="44.4" cy="224.1" r="2.8" fill="#B2A18C"/>
+<circle cx="51.5" cy="192.9" r="2.8" fill="#B2A18C"/>
+<circle cx="63.2" cy="163.1" r="2.8" fill="#B2A18C"/>
+<circle cx="79.2" cy="135.4" r="2.8" fill="#B2A18C"/>
+<circle cx="99.1" cy="110.4" r="2.8" fill="#B2A18C"/>
+<circle cx="122.6" cy="88.7" r="2.8" fill="#B2A18C"/>
+<circle cx="149.0" cy="70.7" r="2.8" fill="#B2A18C"/>
+<circle cx="177.8" cy="56.8" r="2.8" fill="#B2A18C"/>
+<circle cx="208.4" cy="47.4" r="2.8" fill="#B2A18C"/>
+<circle cx="240.0" cy="42.6" r="2.8" fill="#B2A18C"/>
+<circle cx="272.0" cy="42.6" r="2.8" fill="#B2A18C"/>
+<circle cx="303.6" cy="47.4" r="2.8" fill="#B2A18C"/>
+<circle cx="334.2" cy="56.8" r="2.8" fill="#B2A18C"/>
+<circle cx="363.0" cy="70.7" r="2.8" fill="#B2A18C"/>
+<circle cx="389.4" cy="88.7" r="2.8" fill="#B2A18C"/>
+<circle cx="412.9" cy="110.4" r="2.8" fill="#B2A18C"/>
+<circle cx="432.8" cy="135.4" r="2.8" fill="#B2A18C"/>
+<circle cx="448.8" cy="163.1" r="2.8" fill="#B2A18C"/>
+<circle cx="460.5" cy="192.9" r="2.8" fill="#B2A18C"/>
+<circle cx="467.6" cy="224.1" r="2.8" fill="#B2A18C"/>
+</g>
+</svg>

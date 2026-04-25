@@ -1,0 +1,165 @@
+{
+  "version": 1,
+  "types": {
+    "motif": {
+      "label": "纹饰",
+      "color": "#BE9A94",
+      "iconPrimary": "icons/icon-07-medallion.svg",
+      "iconAlt": "icons/icon-06-leaf-branch.svg",
+      "shape": "round-rectangle"
+    },
+    "structure": {
+      "label": "结构",
+      "color": "#9DB18C",
+      "iconPrimary": "icons/icon-06-leaf-branch.svg",
+      "iconAlt": "icons/icon-08-vine-scroll.svg",
+      "shape": "round-rectangle"
+    },
+    "technique": {
+      "label": "工艺",
+      "color": "#7E9D8A",
+      "iconPrimary": "icons/icon-03-meander.svg",
+      "iconAlt": "icons/icon-09-brocade.svg",
+      "shape": "diamond"
+    },
+    "dynasty": {
+      "label": "时代",
+      "color": "#A89BBE",
+      "iconPrimary": "icons/icon-02-ruyi-cloud.svg",
+      "iconAlt": "icons/icon-10-double-cloud.svg",
+      "shape": "ellipse"
+    },
+    "culture": {
+      "label": "文化",
+      "color": "#A99CC7",
+      "iconPrimary": "icons/icon-10-double-cloud.svg",
+      "iconAlt": "icons/icon-02-ruyi-cloud.svg",
+      "shape": "ellipse"
+    },
+    "symbol": {
+      "label": "寓意",
+      "color": "#B2A18C",
+      "iconPrimary": "icons/icon-05-pearl-chain.svg",
+      "iconAlt": "icons/icon-01-lotus-petal.svg",
+      "shape": "hexagon"
+    },
+    "material": {
+      "label": "材质",
+      "color": "#86AFA7",
+      "iconPrimary": "icons/icon-04-water-wave.svg",
+      "iconAlt": "icons/icon-08-vine-scroll.svg",
+      "shape": "octagon"
+    }
+  },
+  "concepts": [
+    {
+      "id": "node-grape-pattern",
+      "label": "葡萄纹",
+      "type": "motif",
+      "iconKey": "iconPrimary",
+      "summary": "葡萄纹既是装饰元素，也是理解唐代文化交流的重要入口。",
+      "detail": "葡萄经丝绸之路传入中原，唐代铜镜将其与海兽组合，象征丰饶与祥瑞。",
+      "hotspotIds": ["grape"],
+      "relatedMirrors": ["M001"]
+    },
+    {
+      "id": "node-sea-beast",
+      "label": "海兽纹",
+      "type": "motif",
+      "iconKey": "iconAlt",
+      "summary": "海兽纹体现铜镜中的想象性动物形象，是装饰中心与审美的核心。",
+      "detail": "海兽形象融合狮、貔貅与西域兽形，唐代盛行，常与葡萄纹并置。",
+      "hotspotIds": ["beast"],
+      "relatedMirrors": ["M001"]
+    },
+    {
+      "id": "node-knob",
+      "label": "镜钮",
+      "type": "structure",
+      "iconKey": "iconPrimary",
+      "summary": "镜钮是铜镜背面的结构中心，也是观看与悬挂的关键参照。",
+      "detail": "钮型从汉代弦纹钮发展到唐代伏兽钮，反映铸造工艺演进。",
+      "hotspotIds": ["knob"],
+      "relatedMirrors": ["M001"]
+    },
+    {
+      "id": "node-outer-band",
+      "label": "外缘带",
+      "type": "structure",
+      "iconKey": "iconAlt",
+      "summary": "外缘带帮助组织整体构图，常用于划分纹饰层次。",
+      "detail": "外缘带的纹样密度与内区互为呼应，唐镜常以联珠、卷草或铭文带收边。",
+      "hotspotIds": ["ring"],
+      "relatedMirrors": ["M001"]
+    },
+    {
+      "id": "node-tang",
+      "label": "唐代",
+      "type": "dynasty",
+      "iconKey": "iconPrimary",
+      "summary": "唐代是铜镜艺术的鼎盛期，纹饰繁复、题材开放。",
+      "detail": "盛唐铜镜吸收西域元素，葡萄、海兽、瑞鸟纹样高度流行。",
+      "relatedMirrors": ["M001"]
+    },
+    {
+      "id": "node-han",
+      "label": "汉代",
+      "type": "dynasty",
+      "iconKey": "iconAlt",
+      "summary": "汉镜以规矩、神兽、铭文为主，奠定中国铜镜的早期范式。",
+      "detail": "TLV 规矩纹与四神镜是汉代代表，强调宇宙秩序与神仙信仰。",
+      "relatedMirrors": []
+    },
+    {
+      "id": "node-silk-road",
+      "label": "丝绸之路",
+      "type": "culture",
+      "iconKey": "iconPrimary",
+      "summary": "丝路推动了纹样东传，是理解唐镜异域元素的关键背景。",
+      "detail": "葡萄、忍冬、联珠等纹样均经丝路进入中原工艺。",
+      "relatedMirrors": []
+    },
+    {
+      "id": "node-gilding",
+      "label": "鎏金",
+      "type": "technique",
+      "iconKey": "iconPrimary",
+      "summary": "鎏金是将金汞齐涂覆器表后加热挥发汞，留下金层的工艺。",
+      "detail": "唐镜中可见鎏金、错银等高规格工艺，常用于贵族用器。",
+      "relatedMirrors": []
+    },
+    {
+      "id": "node-fertility",
+      "label": "多子多福",
+      "type": "symbol",
+      "iconKey": "iconPrimary",
+      "summary": "葡萄串果繁密，被赋予多子多福的吉祥寓意。",
+      "detail": "唐人以葡萄寓意子嗣繁盛，与海兽组合更添祥瑞。",
+      "relatedMirrors": []
+    },
+    {
+      "id": "node-bronze",
+      "label": "青铜",
+      "type": "material",
+      "iconKey": "iconPrimary",
+      "summary": "中国铜镜以铜锡铅合金铸成，配比影响色泽与硬度。",
+      "detail": "唐镜含锡量较高，呈银白色，磨光后可清晰映照人面。",
+      "relatedMirrors": ["M001"]
+    }
+  ],
+  "edges": [
+    { "source": "node-grape-pattern", "target": "node-tang",         "relation": "流行于" },
+    { "source": "node-grape-pattern", "target": "node-silk-road",   "relation": "经由传入" },
+    { "source": "node-grape-pattern", "target": "node-sea-beast",   "relation": "常组合" },
+    { "source": "node-grape-pattern", "target": "node-fertility",   "relation": "象征" },
+    { "source": "node-sea-beast",     "target": "node-tang",         "relation": "盛行于" },
+    { "source": "node-sea-beast",     "target": "node-silk-road",   "relation": "受影响" },
+    { "source": "node-knob",          "target": "node-tang",         "relation": "形制于" },
+    { "source": "node-knob",          "target": "node-bronze",       "relation": "材质" },
+    { "source": "node-outer-band",    "target": "node-grape-pattern","relation": "环绕" },
+    { "source": "node-gilding",       "target": "node-tang",         "relation": "盛行于" },
+    { "source": "node-gilding",       "target": "node-bronze",       "relation": "工艺施于" },
+    { "source": "node-silk-road",     "target": "node-han",          "relation": "始通于" },
+    { "source": "node-silk-road",     "target": "node-tang",         "relation": "繁荣于" }
+  ]
+}
